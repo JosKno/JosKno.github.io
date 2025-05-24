@@ -116,6 +116,108 @@
     function displayCheckoutSummary() { const cart = getCart(); const itemListEl = document.getElementById('checkout-item-list'); const cartCountEl = document.getElementById('checkout-cart-count'); const subtotalEl = document.getElementById('checkout-subtotal'); const grandTotalEl = document.getElementById('checkout-grand-total'); const currentUser = JSON.parse(sessionStorage.getItem('currentUserPSJ')); if (!currentUser) { showToast("Debes <a href='login.html' class='alert-link'>iniciar sesión</a> para proceder al pago.", 'warning'); setTimeout(() => { window.location.href = `login.html?redirect=${encodeURIComponent('pago.html')}`; }, 3000); const formContainer = document.getElementById('checkoutForm')?.closest('.col-md-7.col-lg-8'); const summaryContainer = document.querySelector('.col-md-5.col-lg-4.order-md-last'); if(formContainer) formContainer.innerHTML = '<p class="text-center lead">Redirigiendo a inicio de sesión...</p>'; if(summaryContainer) summaryContainer.style.display = 'none'; const pageTitle = document.querySelector('main.py-5 .container > .py-4.text-center h1.section-title'); if(pageTitle) pageTitle.style.display = "none"; const pageLead = document.querySelector('main.py-5 .container > .py-4.text-center p.lead'); if(pageLead) pageLead.style.display = "none"; return false; } if (!itemListEl || cart.length === 0) { const mainRow = document.querySelector('main.py-5 .container .row.g-5'); if (mainRow) { mainRow.innerHTML = `<div class="col-12 text-center"><h2 class="section-title">Tu carrito está vacío</h2><p class="lead">No tienes productos para proceder al pago.</p><a href="productos.html" class="btn btn-primary btn-lg mt-3">Ver Productos</a></div>`; const pageHeader = document.querySelector('main.py-5 .container > .py-4.text-center'); if(pageHeader) pageHeader.innerHTML = '<h1 class="section-title">Carrito Vacío</h1>'; } if (cartCountEl) cartCountEl.textContent = '0'; if (subtotalEl) subtotalEl.textContent = '$0.00'; if (grandTotalEl) grandTotalEl.textContent = '$0.00'; return false; } itemListEl.innerHTML = ''; let currentSubtotal = 0; let itemCount = 0; cart.forEach(item => { const li = document.createElement('li'); li.className = 'list-group-item d-flex justify-content-between lh-sm'; li.innerHTML = `<div><h6 class="my-0">${item.name}</h6><small class="text-muted">Cantidad: ${item.quantity}</small></div><span class="text-muted">$${(item.price * item.quantity).toFixed(2)}</span>`; itemListEl.appendChild(li); currentSubtotal += item.price * item.quantity; itemCount += item.quantity; }); const shippingCost = 50.00; const grandTotal = currentSubtotal + shippingCost; if (cartCountEl) cartCountEl.textContent = itemCount; if (subtotalEl) subtotalEl.textContent = `$${currentSubtotal.toFixed(2)}`; if (grandTotalEl) grandTotalEl.textContent = `$${grandTotal.toFixed(2)}`; return true; }
     function handleCheckoutFormSubmit(event) { event.preventDefault(); const form = event.target; form.classList.add('was-validated'); if (!form.checkValidity()) { event.stopPropagation(); showToast("Por favor, completa todos los campos requeridos.", 'warning'); return; } showToast("Procesando tu pedido...", 'info'); setTimeout(() => { saveCart([]); sessionStorage.setItem('purchaseCompletedPSJ', 'true'); window.location.href = 'index.html'; }, 2500); }
     function showPurchaseSuccessToastIfNeeded() { if (sessionStorage.getItem('purchaseCompletedPSJ') === 'true') { showToast("¡Gracias por tu compra! Tu pedido ha sido realizado con éxito."); sessionStorage.removeItem('purchaseCompletedPSJ'); } }
+    function startMainWebsiteTour() {
+    const intro = introJs();
+    intro.setOptions({
+        steps: [
+            {
+                element: document.querySelector('.navbar-brand'),
+                intro: "¡Bienvenido a Pastelería San José! Este es nuestro logo. Haz clic aquí para volver siempre a la página de inicio.",
+                position: 'bottom'
+            },
+            {
+                element: document.querySelector('.nav-item a[href="index.html"]'),
+                intro: "Este es el enlace a la página de <strong>Inicio</strong>, donde puedes ver nuestras novedades y destacados.",
+                position: 'bottom'
+            },
+            {
+                element: document.querySelector('.nav-item a[href="nosotros.html"]'),
+                intro: "Haz clic en <strong>Nosotros</strong> para conocer más sobre nuestra historia, la tradición familiar y el equipo detrás de cada delicia.",
+                position: 'bottom'
+            },
+            {
+                element: document.querySelector('.nav-item a[href="productos.html"]'),
+                intro: "En <strong>Productos</strong> encontrarás nuestro catálogo completo de pasteles, panadería y postres individuales. ¡Todo hecho con amor!",
+                position: 'bottom'
+            },
+            {
+                element: document.querySelector('.nav-item a[href="sucursales.html"]'),
+                intro: "Visita <strong>Sucursales</strong> para encontrar la ubicación, horarios y datos de contacto de todas nuestras pastelerías.",
+                position: 'bottom'
+            },
+            {
+                element: document.querySelector('.nav-item a[href="contacto.html"]'),
+                intro: "Si tienes alguna duda, comentario, o deseas cotizar un pastel personalizado, la sección de <strong>Contacto</strong> es tu vía directa con nosotros.",
+                position: 'bottom'
+            },
+            {
+                element: document.getElementById('search-icon-button'),
+                intro: "Utiliza el icono de <strong>búsqueda</strong> (la lupa) para encontrar rápidamente cualquier producto específico que estés buscando.",
+                position: 'bottom'
+            },
+            {
+                element: document.getElementById('cart-icon-button'),
+                intro: "Este es tu <strong>carrito de compras</strong>. Aquí podrás ver los productos que has añadido antes de proceder al pago. Necesitas iniciar sesión para usarlo.",
+                position: 'bottom'
+            },
+            {
+                element: document.getElementById('auth-nav-item'),
+                intro: "Desde este apartado puedes <strong>Iniciar Sesión</strong> en tu cuenta si ya tienes una, o <strong>Registrarte</strong> para crear una nueva. Al tener una cuenta, tus compras son más ágiles.",
+                position: 'bottom'
+            },
+            {
+                element: document.querySelector('button[data-bs-target="#accessibilityOffcanvas"]'),
+                intro: "Este botón abre las <strong>opciones de accesibilidad</strong>, donde puedes ajustar la apariencia del sitio (tema claro/oscuro, tamaño de texto, alto contraste) y también reiniciar este tour cuando quieras.",
+                position: 'left'
+            }
+        ],
+        nextLabel: 'Siguiente &rarr;',
+        prevLabel: '&larr; Anterior',
+        doneLabel: '¡Entendido!',
+        tooltipClass: 'customTooltipForSanJose', // Puedes usar esta clase para estilizar los tooltips si quieres
+        showBullets: false, // Opcional: Oculta los puntos de navegación si prefieres solo botones
+        showProgress: true, // Muestra una barra de progreso
+        exitOnEsc: true,
+        exitOnOverlayClick: true, // Permite cerrar el tour haciendo clic fuera del tooltip
+    });
+
+    const accessibilityOffcanvasElement = document.getElementById('accessibilityOffcanvas');
+    const mainNavbarCollapse = document.getElementById('navbarNav');
+
+    // Cerrar el offcanvas de accesibilidad si está abierto
+    if (accessibilityOffcanvasElement && accessibilityOffcanvasElement.classList.contains('show')) {
+        const bsOffcanvas = bootstrap.Offcanvas.getInstance(accessibilityOffcanvasElement);
+        if (bsOffcanvas) {
+            // Escuchar el evento de que el offcanvas se ocultó para iniciar el tour
+            accessibilityOffcanvasElement.addEventListener('hidden.bs.offcanvas', () => {
+                // Si el menú principal está colapsado (móvil), expandirlo.
+                if (mainNavbarCollapse && !mainNavbarCollapse.classList.contains('show')) {
+                    const bsCollapse = new bootstrap.Collapse(mainNavbarCollapse, { toggle: false });
+                    bsCollapse.show();
+                    // Esperar a que la animación de collapse termine para iniciar el tour
+                    mainNavbarCollapse.addEventListener('shown.bs.collapse', () => {
+                        intro.start();
+                    }, { once: true });
+                } else {
+                    intro.start();
+                }
+            }, { once: true });
+            bsOffcanvas.hide();
+            return; // Salir para esperar el evento hidden.bs.offcanvas
+        }
+    }
+
+    // Si el offcanvas no estaba abierto, proceder con la lógica del navbar colapsado
+    if (mainNavbarCollapse && !mainNavbarCollapse.classList.contains('show') && window.innerWidth < 992) { // 992px es el breakpoint lg de Bootstrap
+        const bsCollapse = bootstrap.Collapse.getInstance(mainNavbarCollapse) || new bootstrap.Collapse(mainNavbarCollapse, { toggle: false });
+        bsCollapse.show();
+        mainNavbarCollapse.addEventListener('shown.bs.collapse', () => {
+            intro.start();
+        }, { once: true });
+    } else {
+        intro.start();
+    }
+}
 
 
     // --- Event Listeners y Ejecuciones en DOMContentLoaded ---
@@ -306,6 +408,11 @@
             }
         }
 
+        const startTourBtn = document.getElementById('startMainTourButton');
+    if (startTourBtn) {
+        startTourBtn.addEventListener('click', startMainWebsiteTour);
+    }
+
         if (window.location.pathname.includes('pago.html')) {
             if (displayCheckoutSummary()) { // Asegura que el resumen se muestre y el usuario esté logueado
                 const checkoutForm = document.getElementById('checkoutForm'); 
@@ -372,3 +479,5 @@
     }); // Fin DOMContentLoaded
 
 })(); // Fin IIFE
+
+
