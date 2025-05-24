@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pastelería San José - Inicio</title>
+    <meta name="description" content="Bienvenidos a la Pastelería San José, donde encontrarás los más deliciosos pasteles y panes artesanales.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <script>
+    (function() {
+        const themeLocalStorageKey = 'theme';
+        const defaultDarkTheme = 'dark';
+        const defaultLightTheme = 'light';
+        let KcalculatedTheme;
+
+        const KstoredTheme = localStorage.getItem(themeLocalStorageKey);
+        if (KstoredTheme) {
+            KcalculatedTheme = KstoredTheme;
+        } else {
+            KcalculatedTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? defaultDarkTheme : defaultLightTheme;
+        }
+        // Aplica el tema al elemento <html> inmediatamente
+        document.documentElement.setAttribute('data-bs-theme', KcalculatedTheme);
+        // Guarda el tema detectado/almacenado para que scripts.js lo pueda leer si es necesario
+        // o para mantener la consistencia si el usuario no interactúa con el switch.
+        localStorage.setItem(themeLocalStorageKey, KcalculatedTheme); 
+        // No usar console.log en este script en línea para producción.
+    })();
+</script>
+
+</head>
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light" id="main-navbar">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">
+                    <img src="images/logo.png" alt="Logo Pastelería San José" height="50">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="index.html">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="nosotros.html">Nosotros</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="productos.html">Productos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="sucursales.html">Sucursales</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="contacto.html">Contacto</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ms-auto align-items-center">
+                        <li class="nav-item">
+                            <button class="nav-link btn btn-link" type="button" id="search-icon-button" aria-label="Abrir búsqueda">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </li>
+                        <li class="nav-item ms-2">
+                            <button class="nav-link btn btn-link position-relative" type="button" id="cart-icon-button" aria-label="Abrir carrito" data-bs-toggle="offcanvas" data-bs-target="#shoppingCartOffcanvas">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cart-count" style="display: none;">
+                                    0
+                                    <span class="visually-hidden">artículos en el carrito</span>
+                                </span>
+                            </button>
+                        </li>
+                        <li class="nav-item ms-2" id="auth-nav-item">
+                            <a class="nav-link" href="login.html" aria-label="Iniciar Sesión">
+                                <i class="fas fa-user me-1"></i>
+                                <span class="d-none d-lg-inline">Iniciar Sesión</span>
+                            </a>
+                        </li>
+                        <li class="nav-item ms-2">
+                            <button class="nav-link btn btn-link" type="button" data-bs-toggle="offcanvas" data-bs-target="#accessibilityOffcanvas" aria-controls="accessibilityOffcanvas" aria-label="Opciones de accesibilidad">
+                                <i class="fas fa-universal-access me-1" aria-hidden="true"></i> <span class="d-none d-lg-inline">Accesibilidad</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div id="searchBarCollapse">
+            <div class="search-bar-content"> <div class="container">
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Buscar productos..." aria-label="Buscar">
+                    <button class="btn btn-outline-accent" type="submit">Buscar</button>
+                </form>
+            </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="shoppingCartOffcanvas" aria-labelledby="shoppingCartOffcanvasLabel">
+      <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title section-title" id="shoppingCartOffcanvasLabel">Carrito de Compras</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <p>Tu carrito está vacío.</p>
+      </div>
+    </div>
+
+    <main>
+        <section id="hero" class="d-flex align-items-center">
+            <div id="heroCarousel" class="carousel slide w-100" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="images/slide1.jpg" class="d-block w-100" alt="Pastel de Chocolate">
+                        <div class="carousel-caption text-start"> 
+                            <h2 class="hero-title">Pasteles para Celebrar</h2>
+                            <p>Momentos especiales merecen sabores inolvidables.</p>
+                            <a href="productos.html#pasteles" class="btn btn-primary">Ver Pasteles</a>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="images/slide2.jpg" class="d-block w-100" alt="Pan Dulce Variado">
+                        <div class="carousel-caption text-start">
+                            <h2 class="hero-title">Pan Recién Horneado</h2>
+                            <p>La tradición del pan dulce, todos los días.</p>
+                            <a href="productos.html#panaderia" class="btn btn-primary">Ver Panadería</a>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="images/slide3.jpg" class="d-block w-100" alt="Pastel Personalizado">
+                        <div class="carousel-caption text-start">
+                            <h2 class="hero-title">Creamos tu Pastel Ideal</h2>
+                            <p>Personaliza tu pastel para cualquier ocasión.</p>
+                            <a href="contacto.html" class="btn btn-primary">Cotizar Pastel</a>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </section>
+
+        <section id="featured-products" class="py-5" data-aos="fade-up">
+        <div class="container">
+            <h2 class="text-center mb-4 section-title">Nuestras Especialidades</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100 product-card">
+                        <img src="images/pastel-tres-leches.jpg" class="card-img-top" alt="Pastel Tres Leches">
+                        <div class="card-body text-center d-flex flex-column">
+                            <h5 class="card-title">Pastel Tres Leches</h5>
+                            <p class="card-text small flex-grow-1">Nuestro clásico y jugoso pastel bañado en tres leches.</p>
+                            <a href="producto-detalle.html?id=tres-leches" class="btn btn-outline-primary mt-auto align-self-center stretched-link">Ver Más</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 product-card">
+                        <img src="images/conchas.jpg" class="card-img-top" alt="Conchas">
+                        <div class="card-body text-center d-flex flex-column">
+                            <h5 class="card-title">Conchas Tradicionales</h5>
+                            <p class="card-text small flex-grow-1">Suaves y esponjosas, perfectas para acompañar tu café.</p>
+                            <a href="producto-detalle.html?id=conchas" class="btn btn-outline-primary mt-auto align-self-center stretched-link">Ver Más</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 product-card">
+                        <img src="images/cheesecake.png" class="card-img-top" alt="Cheesecake de Fresa">
+                        <div class="card-body text-center d-flex flex-column">
+                            <h5 class="card-title">Cheesecake de Fresa</h5>
+                            <p class="card-text small flex-grow-1">Cremoso cheesecake con una cubierta de fresas frescas.</p>
+                            <a href="producto-detalle.html?id=cheesecake-fresa" class="btn btn-outline-primary mt-auto align-self-center stretched-link">Ver Más</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <a href="productos.html" class="btn btn-primary btn-lg">Ver Todos los Productos</a>
+            </div>
+        </div>
+    </section>
+
+        <section id="about" class="py-5 bg-light" data-aos="fade-left">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <img src="images/panaderia-interior.jpg" alt="Interior de la Pastelería San José" class="img-fluid rounded shadow">
+                    </div>
+                    <div class="col-md-6">
+                        <h2 class="section-title mb-3">Sobre Nosotros</h2>
+                        <p>En Pastelería San José, llevamos más de 30 años endulzando los momentos de nuestros clientes. Creemos en la calidad de los ingredientes, las recetas tradicionales y el cariño en cada preparación.</p>
+                        <p>Desde nuestros inicios, nuestro compromiso ha sido ofrecer productos frescos y deliciosos, manteniendo el sabor casero que nos caracteriza.</p>
+                        <a href="nosotros.html" class="btn btn-outline-secondary">Conoce Nuestra Historia</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cta" class="py-5 text-center text-white " data-aos="fade-up">
+            <div class="container">
+                <h2 class="display-5">¿Antojo de algo dulce?</h2>
+                <p class="lead my-3">Visita nuestras sucursales o haz tu pedido.</p>
+                <a href="sucursales.html" class="btn btn-light btn-lg me-2">Encuentra tu Sucursal</a>
+                <a href="contacto.html" class="btn btn-outline-light btn-lg ms-2">Haz tu Pedido</a>
+            </div>
+        </section>
+    </main>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="accessibilityOffcanvas" aria-labelledby="accessibilityOffcanvasLabel">
+        <div class="offcanvas-header border-bottom">
+            <h5 class="offcanvas-title section-title" id="accessibilityOffcanvasLabel">Configuración de Accesibilidad</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">
+                    <h2 class="h5 mb-0">Apariencia del Sitio</h2>
+                </div>
+                <div class="card-body">
+                    <p>Elige cómo prefieres visualizar el sitio.</p>
+                    <div class="d-flex justify-content-center align-items-center p-3">
+                        <span class="me-3 text-muted">Modo Claro</span>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" id="darkModeSwitch" style="transform: scale(1.5); cursor:pointer;">
+                            <label class="form-check-label visually-hidden" for="darkModeSwitch">Activar modo oscuro</label>
+                        </div>
+                        <span class="ms-3 text-muted">Modo Oscuro</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">
+                    <h2 class="h5 mb-0">Tamaño del Texto</h2>
+                </div>
+                <div class="card-body">
+                    <p>Ajusta el tamaño de la fuente para mejorar la lectura.</p>
+                    <div class="d-flex justify-content-center align-items-center flex-wrap gap-2">
+                        <button class="btn btn-secondary" id="decrease-font-button" aria-label="Disminuir tamaño de fuente"> A- </button>
+                        <button class="btn btn-secondary" id="reset-font-button" aria-label="Restablecer tamaño de fuente"> Normal </button>
+                        <button class="btn btn-secondary" id="increase-font-button" aria-label="Aumentar tamaño de fuente"> A+ </button>
+                    </div>
+                    <div id="font-size-status" class="text-center text-muted small mt-2" aria-live="polite">
+                        Tamaño actual: Normal
+                    </div>
+                </div>
+            </div>
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">
+                    <h2 class="h5 mb-0">Modo de Alto Contraste</h2>
+                </div>
+                <div class="card-body">
+                    <p>Cambia los colores del sitio para mejorar la legibilidad.</p>
+                    <div class="d-flex justify-content-center align-items-center p-3">
+                        <span class="me-3 text-muted">Contraste Normal</span>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" id="highContrastSwitch" style="transform: scale(1.5); cursor:pointer;">
+                            <label class="form-check-label visually-hidden" for="highContrastSwitch">Activar modo de alto contraste</label>
+                        </div>
+                        <span class="ms-3 text-muted">Alto Contraste</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="py-4 mt-auto">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3 mb-md-0 text-center text-md-start">
+                    <h5>Pastelería San José</h5>
+                    <p class="small">Horneando felicidad desde 1984</p>
+                    <a href="https://www.facebook.com/PasteleriaSanJose" class="text-decoration-none me-2 footer-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/pasteleriasanjose/" class="text-decoration-none me-2 footer-icon"><i class="fab fa-instagram"></i></a>
+                </div>
+                <div class="col-md-4 mb-3 mb-md-0 text-center">
+                    <h5>Enlaces Rápidos</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="footer-link">Inicio</a></li>
+                        <li><a href="productos.html" class="footer-link">Productos</a></li>
+                        <li><a href="nosotros.html" class="footer-link">Nosotros</a></li>
+                        <li><a href="sucursales.html" class="footer-link">Sucursales</a></li>
+                        <li><a href="contacto.html" class="footer-link">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 text-center text-md-end">
+                    <h5>Contacto</h5>
+                    <p class="small mb-1">Teléfono: (81) 8339 1004</p>
+                    <p class="small mb-1">Email: contacto@sanjose.com</p>
+                    <p class="small">Dirección Principal: Avenida Lincoln #5501</p>
+                </div>
+            </div>
+            <hr class="my-3">
+            <div class="text-center small">
+                © <span id="current-year"></span> Pastelería San José. Todos los derechos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="js/scripts.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+</body>
+</html>
