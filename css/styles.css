@@ -254,27 +254,32 @@ a:hover {
  
 /* --- Botones --- */
 .btn-primary {
-  background-color: var(--bs-primary); 
-  border-color: var(--bs-primary); 
-  color: #fff; 
+    background-color: var(--bs-primary); /* En tema claro, --bs-primary es var(--color-secondary) */
+    border-color: var(--bs-primary);
+    color: #fff;
 }
- 
-.btn-primary:hover {
-  background-color: var(--color-primary); 
-  border-color: var(--color-primary);
-  color: #fff;
-}
- 
+
+    .btn-primary:hover {
+        background-color: var(--color-primary);
+        border-color: var(--color-primary);
+        color: #fff;
+    }
+
+/* --- .btn-outline-primary para TEMA CLARO (Invertido) --- */
+/* Ahora .btn-outline-primary se ve como un botón sólido por defecto */
 .btn-outline-primary {
-  color: var(--color-primary); 
-  border-color: var(--color-primary); 
+    background-color: var(--color-primary); /* Fondo marrón oscuro */
+    color: #fff; /* Texto blanco */
+    border-color: var(--color-primary); /* Borde marrón oscuro */
 }
- 
-.btn-outline-primary:hover {
-  background-color: var(--color-primary); 
-  border-color: var(--color-primary); 
-  color: #fff;
-}
+
+    /* Al pasar el cursor o enfocar, se ve como un botón de contorno */
+    .btn-outline-primary:hover,
+    .btn-outline-primary:focus-visible {
+        background-color: #fff; /* Fondo blanco (o transparent para heredar) */
+        color: var(--color-primary); /* Texto marrón oscuro */
+        border-color: var(--color-primary); /* Borde marrón oscuro */
+    }
  
 .btn-secondary {
     background-color: var(--color-secondary); 
