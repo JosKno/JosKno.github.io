@@ -93,24 +93,8 @@
             themeSwitcher.checked = (theme === 'dark');
         }
     };
-
-    /**
-     * Obtiene el tema actual para sincronizar el switch.
-     * Lee el tema que el script del <head> o una interacción previa ya estableció.
-     */
-    const getInitialThemeForSwitch = () => {
-        // El script en <head> ya debió establecer 'theme' en localStorage
-        const currentTheme = localStorage.getItem(themeLocalStorageKey);
-        console.log('[scripts.js] getInitialThemeForSwitch: Leyendo de localStorage para switch sync ->', currentTheme);
-        // Si por alguna razón no está en localStorage, recurre al atributo o al OS.
-        return currentTheme || document.documentElement.getAttribute('data-bs-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    };
     
-    // El script en <head> ya aplica el tema visual inicial.
-    // Aquí solo necesitamos la lógica para interactividad y cambios posteriores.
-
     // --- Funciones del Carrito, Productos, Autenticación, etc. ---
-    // (Estas funciones permanecen igual que en la versión completa anterior que te di)
     function getCart() { return JSON.parse(localStorage.getItem('shoppingCartPSJ')) || []; }
     function saveCart(cart) { localStorage.setItem('shoppingCartPSJ', JSON.stringify(cart)); updateCartUI(); }
     function parsePrice(priceString) { if (typeof priceString === 'number') return priceString; if (typeof priceString === 'string') { const cleanedString = priceString.replace(/[^0-9.]/g, ''); const price = parseFloat(cleanedString); return isNaN(price) ? 0 : price; } return 0; }
@@ -147,9 +131,9 @@
         console.log('Pastelería San José - Scripts cargados y DOM listo.');
         
         // Lógica de Tema: Sincronizar el switch con el tema ya aplicado por el script en <head>
-        const themeAppliedByHead = localStorage.getItem(themeLocalStorageKey) || // El script del head lo guarda
-                                 document.documentElement.getAttribute('data-bs-theme') || // Por si localStorage fallara
-                                 (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); // Fallback final
+        const themeAppliedByHead = localStorage.getItem(themeLocalStorageKey) || 
+                                   document.documentElement.getAttribute('data-bs-theme') ||
+                                   (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 
         console.log('[scripts.js] DOMContentLoaded: Tema detectado para switch sync ->', themeAppliedByHead);
         
@@ -323,12 +307,62 @@
         }
 
         if (window.location.pathname.includes('pago.html')) {
-            if (displayCheckoutSummary()) {
+            if (displayCheckoutSummary()) { // Asegura que el resumen se muestre y el usuario esté logueado
                 const checkoutForm = document.getElementById('checkoutForm'); 
                 if (checkoutForm) checkoutForm.addEventListener('submit', handleCheckoutFormSubmit);
+                
                 const currentUser = JSON.parse(sessionStorage.getItem('currentUserPSJ'));
                 const emailInputCheckout = document.getElementById('email'); 
-                if (currentUser && currentUser.email && emailInputCheckout) { emailInputCheckout.value = currentUser.email; emailInputCheckout.readOnly = true; }
+                if (currentUser && currentUser.email && emailInputCheckout) { 
+                    emailInputCheckout.value = currentUser.email; 
+                    emailInputCheckout.readOnly = true; // Opcional: hacer el email no editable si ya está logueado
+                }
+
+                // --- INICIO: Lógica para formateo de campos de pago ---
+                const ccNumberInput = document.getElementById('cc-number');
+                const ccExpirationInput = document.getElementById('cc-expiration');
+                const ccCvvInput = document.getElementById('cc-cvv');
+
+                if (ccNumberInput) {
+                    ccNumberInput.addEventListener('input', function (e) {
+                        let value = e.target.value.replace(/\D/g, ''); // Eliminar no dígitos
+                        let formattedValue = '';
+
+                        for (let i = 0; i < value.length; i++) {
+                            if (i > 0 && i % 4 === 0) {
+                                formattedValue += '-';
+                            }
+                            formattedValue += value[i];
+                        }
+                        // Limitar a XXXX-XXXX-XXXX-XXXX (19 caracteres)
+                        e.target.value = formattedValue.substring(0, 19); 
+                    });
+                }
+
+                if (ccExpirationInput) {
+                    ccExpirationInput.addEventListener('input', function (e) {
+                        let value = e.target.value.replace(/\D/g, ''); // Eliminar no dígitos
+                        let formattedValue = '';
+
+                        if (value.length > 0) {
+                            formattedValue += value.substring(0, 2); // MM
+                        }
+                        if (value.length >= 2) {
+                            formattedValue += '/' + value.substring(2, 4); // AA
+                        }
+                        
+                        // Limitar a MM/AA (5 caracteres)
+                        e.target.value = formattedValue.substring(0, 5); 
+                    });
+                }
+
+                if (ccCvvInput) {
+                    ccCvvInput.addEventListener('input', function (e) {
+                        let value = e.target.value.replace(/\D/g, ''); // Eliminar no dígitos
+                        e.target.value = value.substring(0, 3); // Limitar a 3 dígitos
+                    });
+                }
+                // --- FIN: Lógica para formateo de campos de pago ---
             }
         }
         
