@@ -254,32 +254,27 @@ a:hover {
  
 /* --- Botones --- */
 .btn-primary {
-    background-color: var(--bs-primary); /* En tema claro, --bs-primary es var(--color-secondary) */
-    border-color: var(--bs-primary);
-    color: #fff;
+  background-color: var(--bs-primary); 
+  border-color: var(--bs-primary); 
+  color: #fff; 
 }
-
-    .btn-primary:hover {
-        background-color: var(--color-primary);
-        border-color: var(--color-primary);
-        color: #fff;
-    }
-
-/* --- .btn-outline-primary para TEMA CLARO (Invertido) --- */
-/* Ahora .btn-outline-primary se ve como un botón sólido por defecto */
+ 
+.btn-primary:hover {
+  background-color: var(--color-primary); 
+  border-color: var(--color-primary);
+  color: #fff;
+}
+ 
 .btn-outline-primary {
-    background-color: var(--color-primary); /* Fondo marrón oscuro */
-    color: #fff; /* Texto blanco */
-    border-color: var(--color-primary); /* Borde marrón oscuro */
+  color: var(--color-primary); 
+  border-color: var(--color-primary); 
 }
-
-    /* Al pasar el cursor o enfocar, se ve como un botón de contorno */
-    .btn-outline-primary:hover,
-    .btn-outline-primary:focus-visible {
-        background-color: #fff; /* Fondo blanco (o transparent para heredar) */
-        color: var(--color-primary); /* Texto marrón oscuro */
-        border-color: var(--color-primary); /* Borde marrón oscuro */
-    }
+ 
+.btn-outline-primary:hover {
+  background-color: var(--color-primary); 
+  border-color: var(--color-primary); 
+  color: #fff;
+}
  
 .btn-secondary {
     background-color: var(--color-secondary); 
@@ -875,4 +870,79 @@ body.fade-in-loaded {
 [data-contrast="high"] .cart-quantity-increase:focus-visible {
     outline: none !important;
     box-shadow: var(--hc-button-focus-shadow) !important;
+}
+
+.customTooltipForSanJose .introjs-tooltip {
+    background-color: var(--color-primary); /* Fondo del tooltip */
+    color: white; /* Color del texto */
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.customTooltipForSanJose .introjs-tooltiptext {
+    font-family: var(--font-primary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.customTooltipForSanJose .introjs-button {
+    background-color: var(--color-accent);
+    color: var(--color-primary);
+    border: none;
+    text-shadow: none;
+    border-radius: 4px;
+    font-weight: bold;
+    padding: 8px 15px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.customTooltipForSanJose .introjs-button:hover {
+    background-color: var(--color-secondary);
+    color: white;
+}
+
+[data-bs-theme="dark"] .customTooltipForSanJose .introjs-bullets ul li a {
+    background: var(--color-accent);     /* Balas amarillas, visibles sobre fondo oscuro */
+}
+[data-bs-theme="dark"] .customTooltipForSanJose .introjs-bullets ul li a.active {
+    background: var(--color-primary);    /* Bala activa marrón medio (del tema oscuro) */
+}
+[data-bs-theme="dark"] .customTooltipForSanJose .introjs-progress .introjs-progressbar {
+    background-color: var(--color-accent); /* Barra de progreso amarilla, ya visible */
+}
+
+
+.customTooltipForSanJose .introjs-bullets ul li a {
+    background: var(--color-accent);
+}
+.customTooltipForSanJose .introjs-bullets ul li a.active {
+    background: var(--color-secondary);
+}
+
+.customTooltipForSanJose .introjs-progress .introjs-progressbar {
+    background-color: var(--color-accent);
+}
+
+/* Ajustes para el modo oscuro si es necesario, o Intro.js podría manejarlo bien */
+[data-bs-theme="dark"] .customTooltipForSanJose .introjs-tooltip {
+    background-color: var(--color-light) !important; /* Un color oscuro pero no el fondo principal */
+    color: var(--color-dark) !important;
+    border: 1px solid var(--bs-border-color);
+}
+
+[data-bs-theme="dark"] .customTooltipForSanJose .introjs-button {
+    background-color: var(--color-accent);
+    color: var(--color-dark); /* Asegurar contraste */
+}
+
+[data-bs-theme="dark"] .customTooltipForSanJose .introjs-button:hover {
+    /* En tu tema oscuro:
+       --color-primary es #a07c43 (Marrón Medio)
+       --color-dark es #dee2e6 (Texto claro) */
+    background-color: var(--color-primary); /* Fondo marrón medio */
+    color: var(--color-dark);               /* Texto claro */
+}
+
+[data-bs-theme="dark"] .customTooltipForSanJose .introjs-progress .introjs-progressbar {
+    background-color: var(--color-accent);
 }
