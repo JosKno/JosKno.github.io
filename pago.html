@@ -234,7 +234,7 @@
                             </div>
                             <div class="col-12">
                                 <label for="phone" class="form-label">Teléfono</label>
-                                <input type="tel" class="form-control" id="phone" placeholder="8100000000" required>
+                                <input type="tel" class="form-control" id="phone" placeholder="81+" required>
                                 <div class="invalid-feedback">Por favor, ingresa un teléfono válido.</div>
                             </div>
                             <div class="col-12">
@@ -244,7 +244,7 @@
                             </div>
                             <div class="col-md-5">
                                 <label for="city" class="form-label">Ciudad</label>
-                                <input type="text" class="form-control" id="city" placeholder="Monterrey" required>
+                                <input type="text" class="form-control" id="city" placeholder="" required>
                                 <div class="invalid-feedback">Ciudad es requerida.</div>
                             </div>
                             <div class="col-md-4">
@@ -284,13 +284,15 @@
                                 <small class="text-muted">Nombre completo como se muestra en la tarjeta.</small>
                             </div>
                             <div class="col-md-6">
-                                <label for="cc-number" class="form-label">Número de tarjeta</label>
-                                <input type="text" class="form-control" id="cc-number" placeholder="XXXX-XXXX-XXXX-XXXX" >
-                            </div>
-                            <div class="col-md-3">
-                                <label for="cc-expiration" class="form-label">Expiración</label>
-                                <input type="text" class="form-control" id="cc-expiration" placeholder="MM/AA" >
-                            </div>
+    <label for="cc-number" class="form-label">Número de tarjeta</label>
+    <input type="text" class="form-control" id="cc-number" placeholder="XXXX-XXXX-XXXX-XXXX" maxlength="19">
+    <div class="invalid-feedback" id="cc-number-feedback">Número de tarjeta inválido.</div>
+</div>
+<div class="col-md-3">
+    <label for="cc-expiration" class="form-label">Expiración</label>
+    <input type="text" class="form-control" id="cc-expiration" placeholder="MM/AA" maxlength="5">
+    <div class="invalid-feedback" id="cc-expiration-feedback">Fecha de expiración inválida.</div>
+</div>
                             <div class="col-md-3">
                                 <label for="cc-cvv" class="form-label">CVV</label>
                                 <input type="text" class="form-control" id="cc-cvv" placeholder="XXX" >
